@@ -1,0 +1,68 @@
+<header>
+  <div class="container">
+    <div class="wrap">
+      <a 
+        routerLink="/" 
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact: true}"
+        class="logo"
+      >
+        <span nz-icon nzType="dollar" nzTheme="outline"></span>
+        <span class="logo__name">DOLLAR NEWS</span>
+      </a>
+      <ul class="ml-16">
+        <li>
+          <a 
+            *ngIf="authService.isAllowedRole(UserAndAutor)"
+            [routerLink]="['/feedback']"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: true}"
+          >Send feedback</a>
+          <a 
+            *ngIf="authService.isAuthorized && authService.isAllowedRole(Admin)"
+            [routerLink]="['/feedback/view']"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: true}"
+          >View feedback</a>
+          <a 
+            *ngIf="authService.isAuthorized && authService.isAllowedRole(Admin)" 
+            [routerLink]="['/category/create']"
+            routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+            >Create Category</a>
+        </li>
+      </ul>
+      <div class="account">
+        <div class="user">
+          <nz-avatar 
+            *ngIf="!user?.imageSrc" 
+            [nzSize]="40" 
+            nzIcon="user"
+          ></nz-avatar>
+          <img *ngIf="user?.imageSrc" [src]="user.imageSrc" [alt]="user.name">
+          <span class="no-wrap">{{ (user.name) ? user.name : 'anonimus' }}</span>
+        </div>
+        <div class="flex"  *ngIf="!this.authService.isAuthorized; else logout">
+          <a routerLink="/auth/login" nz-button nzType="primary" class="btn ml-16">
+            <span>Login</span>
+            <span nz-icon nzType="login" nzTheme="outline"></span>
+          </a>
+          <a routerLink="/auth/registration" nz-button nzType="primary" class="btn ml-16">
+            <span>Registration</span>
+          </a>
+        </div>
+        <ng-template #logout>
+          <button (click)="logOut()" nz-button nzType="primary" class="btn ml-16">
+            <span>Logout</span>
+            <span nz-icon nzType="logout" nzTheme="outline"></span>
+          </button>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</header>
+
+<ng-template #loader>
+  <app-loader 
+  style="width: 50%;"
+  [loader]="true" [fontSize]="'40px'" [color]="'#fff'"></app-loader>
+</ng-template>

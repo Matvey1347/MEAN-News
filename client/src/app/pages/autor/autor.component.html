@@ -1,0 +1,23 @@
+<div *ngIf="autor$ | async as autor; else loader" class="container">
+  <div class="category mt-40 flex flex-col">
+    <div class="flex-center">
+      <nz-avatar *ngIf="!autor.imageSrc" [nzSize]="80" nzIcon="user"></nz-avatar>
+      <img class="image" *ngIf="autor.imageSrc" [src]="autor.imageSrc" [alt]="autor.name">
+      <h2 class="ml-16"><a [routerLink]="['/autor', autor._id]">{{ autor.name }}</a></h2>
+    </div>
+    <div *ngIf="autor.news.length else noNews" class="news-wrap mt-20">
+      <div *ngFor="let news of autor.news; let i = index" class="news">
+        <app-news-item (click)="navigateToNews(news._id)" [news]="news"
+          [routerLink]="['news', news._id]"></app-news-item>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
+
+<ng-template #noNews>
+  <h3 class="text-center flex-center mt-20">This category doesn't have news :(</h3>
+</ng-template>

@@ -1,0 +1,27 @@
+.alert {
+  display: flex;
+  align-items: center;
+  max-width: 700px;
+  z-index: 100000000;
+  border-radius: 4px;
+  transition: all 0.5s ease 0s;
+
+  &__text {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.14;
+    color: #32324D;
+
+    & span {
+      font-weight: 700;
+    }
+  }
+
+  & span[nz-icon] {
+    color: #32324D;
+    margin-left: 10px;
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+  }
+}

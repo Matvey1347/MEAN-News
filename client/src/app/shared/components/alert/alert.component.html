@@ -1,0 +1,10 @@
+
+<div #alert class="alert flex items-center">
+  <div class="alert__text">
+    <span>{{ title }}</span>
+    {{ message }}
+  </div>
+  <button class="flex" (click)="hiddenAlert()">
+    <span nz-icon nzType="close-circle" nzTheme="outline"></span>
+  </button>
+</div>

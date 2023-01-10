@@ -1,0 +1,91 @@
+<div *ngIf="!onShowLoaderBigLoader; else loader" class="container news mt-40">
+  <div class="flex justify-between">
+    <div class="flex flex-col items-center">
+      <h3>
+        <a [routerLink]="['/category', news.category._id]">{{ news.category.name }}</a>
+      </h3>
+      <div *ngIf="user?._id else pleaseAuthorization">
+        <button *ngIf="!hasSubscription(news.category._id) else hasSubscriptionToThisCatgory"
+          (click)="subscibeToThisCategory(news.category)" nz-button nzType="primary">
+          Subscribe
+        </button>
+        <ng-template #hasSubscriptionToThisCatgory>
+          <div class="subscribed">You have already subscribed :)</div>
+        </ng-template>
+      </div>
+    </div>
+    <a 
+      [routerLink]="['/autor', news.autor._id]"
+      class="autor flex flex-col items-center">
+      <img *ngIf="news.autor?.imageSrc" [src]="news.autor.imageSrc" [alt]="news.autor.name">
+      <nz-avatar
+        *ngIf="!news.autor?.imageSrc"
+        [nzSize]="40" 
+        nzIcon="user"
+      ></nz-avatar>
+      <h3>{{ news.autor.name }}</h3>
+    </a>
+  </div>
+
+  <h2 class="text-center">{{ news.title }}</h2>
+  <div class="flex justify-between mt-20">
+    <img *ngIf="news.imageSrc" class="news__image" [src]="news.imageSrc" [alt]="news.title">
+    <nz-avatar 
+      *ngIf="!news.imageSrc" 
+      [nzShape]="'square'"
+      [nzSize]="500" 
+      nzIcon="camera"
+    ></nz-avatar>
+    <div class="flex flex-col news__texts">
+      <div *ngFor="let text of news.list" class="text mt-20">{{ text }}</div>
+    </div>
+  </div>
+
+  <div class="news__comments mt-40">
+    <div class="news__comments_add">
+      <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+        <input #inputComment (keypress)="addComment(inputComment, $event)" type="text" nz-input placeholder="Please add your comment about this news :)" />
+      </nz-input-group>
+      <ng-template #suffixIconButton>
+        <button (click)="addComment(inputComment)" nz-button nzType="primary">
+          Add comment <span nz-icon nzType="comment" nzTheme="outline"></span>
+        </button>
+      </ng-template>
+    </div>
+    <div class="mt-20">
+      <div *ngIf="!onShowLoaderForComments; else loader">
+        <div *ngIf="news.comments.length else noComments" class="news__comments_items comments__items">
+          <div *ngFor="let comment of news.comments" class="comments__items_item flex items-center mt-20">
+            <div class="flex flex-col items-center mr-16">
+              <img 
+                *ngIf="comment.autor.imageSrc" 
+                [src]="comment.autor.imageSrc" 
+                [alt]="comment.autor.name"
+              >
+              <nz-avatar 
+                *ngIf="!comment.autor.imageSrc" 
+                [nzSize]="40" 
+                nzIcon="user"
+              ></nz-avatar>
+
+             <h3>{{ comment.autor.name }}</h3>
+            </div>
+            <div class="text">{{ comment.message }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
+
+<ng-template #noComments>
+  <h3 class="text-center mt-20">This news doesn't have any comments yet :(</h3>
+</ng-template>
+
+<ng-template #pleaseAuthorization>
+  <h3 class="text-center flex-center mt-20">Please log in to :)</h3>
+</ng-template>

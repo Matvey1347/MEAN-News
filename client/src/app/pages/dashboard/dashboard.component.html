@@ -1,0 +1,58 @@
+<div *ngIf="categories$ | async as categories; else loader" class="container mt-20">
+  <div *ngIf="categories.length else noCategories">
+    <div class="buttons-wrap">
+      <button 
+        *ngFor="let category of categories" 
+        [routerLink]="['category', category._id]" 
+        nz-button nzType="primary"
+        class="mr-16">
+        {{ category.name }}
+      </button>
+    </div>
+    <div class="category mt-40 flex flex-col" *ngFor="let category of categories">
+      <div class="flex">
+        <div class="category__name flex flex-col mr-16">
+          <h2><a [routerLink]="['category', category._id]">{{ category.name }}</a></h2>
+          <div *ngIf="user?._id else pleaseAuthorization">
+            <button 
+              *ngIf="!hasSubscription(category._id) else hasSubscriptionToThisCatgory"
+              (click)="subscibeToThisCategory(category)"
+              nz-button nzType="primary"
+            >
+              Subscribe
+            </button>
+            <ng-template #hasSubscriptionToThisCatgory>
+              <div class="subscribed">You have already subscribed :)</div>
+            </ng-template>
+          </div>
+        </div>
+        <div *ngIf="category.news.length else noNews" class="news-wrap">
+          <div *ngFor="let news of category.news; let i = index" class="news">
+            <app-news-item 
+              *ngIf="i < 5"
+              (click)="navigateToNews(news._id)"
+              [news]="news"
+              [routerLink]="['news', news._id]"
+            ></app-news-item>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
+
+<ng-template #noCategories>
+  <h3 class="text-center flex-center">Sorry, but now we don't have Cateroies :(</h3>
+</ng-template>
+
+<ng-template #noNews>
+  <h3 class="text-center flex-center">This category doesn't have news :(</h3>
+</ng-template>
+
+<ng-template #pleaseAuthorization>
+  <h3 class="text-center flex-center mt-20">Please log in to :)</h3>
+</ng-template>

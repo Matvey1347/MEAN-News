@@ -1,0 +1,14 @@
+<div *ngIf="feedback$ | async as feedback; else loader" class="container">
+  <div nz-card-grid class="grid-style flex items-center justify-between mt-20">
+    <div class="flex-item flex-start title">AUTOR: </div>
+    <p class="flex-item flex-start title message">"MESSAGE"</p>
+  </div>
+  <div *ngFor="let oneFeedback of feedback" nz-card-grid class="grid-style flex items-center justify-between mt-20">
+    <div class="flex-item flex-start">{{ oneFeedback.userName }}:  </div>
+    <p class="flex-item flex-start message">"{{ oneFeedback.message }}"</p>
+  </div>
+</div>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

@@ -1,0 +1,41 @@
+<div *ngIf="!onShowLoader else loader">
+  <form [formGroup]="loginForm" (submit)="onSubmit()" class="container">
+    <nz-input-group 
+      [nzStatus]="(loginForm.get('name')?.invalid && !loginForm.get('name')?.untouched) ? 'error' : ''" 
+      [nzSuffix]="suffixTemplateInfo" 
+      [nzPrefix]="prefixTemplateUser"
+    >
+      <input formControlName="name" type="text" nz-input placeholder="Enter your username" />
+    </nz-input-group>
+    <ng-template #prefixTemplateUser><span nz-icon nzType="user"></span></ng-template>
+    <ng-template #suffixTemplateInfo>
+      <span nz-icon nz-tooltip nzTooltipTitle="Write your user name or login" nzType="info-circle"></span>
+    </ng-template>
+
+ 
+    <nz-input-group class="mt-20" nzSearch [nzAddOnAfter]="showBTN">
+      <input 
+        #password
+        formControlName="password" 
+        type="password"
+        [nzStatus]="(loginForm.get('password')?.invalid  && !loginForm.get('password')?.untouched) ? 'error' : ''"
+        nz-input 
+        placeholder="Password" />
+    </nz-input-group>
+    <ng-template #showBTN>
+      <button (click)="onShowPassword(password)" type="button" nz-button nzType="primary" nzSearch>
+        <span *ngIf="!showPassword" nz-icon nzType="eye" nzTheme="outline"></span>
+        <span *ngIf="showPassword" nz-icon nzType="eye-invisible" nzTheme="outline"></span>
+      </button>
+    </ng-template>
+
+
+    <div class="button-wrap">
+      <button class="btn mt-20" nz-button nzType="primary" type="submit">LOGIN</button>
+    </div>
+  </form>
+</div>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

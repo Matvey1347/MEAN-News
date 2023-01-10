@@ -1,0 +1,59 @@
+<div *ngIf="!onShowLoader else loader">
+  <form [formGroup]="registrationForm" (submit)="onSubmit()" class="container mt-20">
+    <nz-input-group [nzStatus]="(registrationForm.get('name')?.invalid && !registrationForm.get('name')?.untouched) ? 'error' : ''"
+      [nzSuffix]="suffixTemplateInfo" [nzPrefix]="prefixTemplateUser">
+      <input formControlName="name" type="text" nz-input placeholder="Enter your username" />
+    </nz-input-group>
+    <ng-template #prefixTemplateUser><span nz-icon nzType="user"></span></ng-template>
+    <ng-template #suffixTemplateInfo>
+      <span nz-icon nz-tooltip nzTooltipTitle="Write your user name or login" nzType="info-circle"></span>
+    </ng-template>
+
+    <input [nzStatus]="(registrationForm.get('email')?.invalid && !registrationForm.get('email')?.untouched) ? 'error' : ''"
+      formControlName="email" class="mt-20" nz-input placeholder="Email" />
+    
+    <nz-input-group class="mt-20" nzSearch [nzAddOnAfter]="showBTN">
+      <input 
+        type="password"
+        #password
+        [nzStatus]="(registrationForm.get('password')?.invalid  && !registrationForm.get('password')?.untouched) ? 'error' : ''"
+        formControlName="password"
+         nz-input placeholder="Password" />
+    </nz-input-group>
+    <ng-template #showBTN>
+      <button (click)="onShowPassword(password)" type="button" nz-button nzType="primary" nzSearch>
+        <span *ngIf="!showPassword" nz-icon nzType="eye" nzTheme="outline"></span>
+        <span *ngIf="showPassword" nz-icon nzType="eye-invisible" nzTheme="outline"></span>
+      </button>
+    </ng-template>
+
+      <nz-select formControlName="role" class="mt-20" nzPlaceHolder="Choose your role">
+        <nz-option nzValue="user" nzLabel="user"></nz-option>
+        <nz-option nzValue="autor" nzLabel="autor"></nz-option>
+        <nz-option nzValue="admin" nzLabel="admin"></nz-option>
+      </nz-select>
+    <div class="buttons-wrap">
+      <input type="file" style="display: none;" (change)="uploadFile($event)" #input>
+      <div class="upload-wrap">
+        <button (click)="triggerClick()" nz-button [disabled]="registrationForm.disabled" type="button">
+          <span nz-icon nzType="video-camera" nzTheme="outline"></span>
+          Загрузить изображение
+        </button>
+
+        <div class="image">
+          <nz-avatar 
+            *ngIf="!imagePreview" 
+            [nzSize]="100" 
+            nzIcon="user"
+          ></nz-avatar>
+          <img *ngIf="imagePreview" [src]="imagePreview" [alt]="imagePreview">
+        </div>
+      </div>
+      <button class="btn mt-20" nz-button nzType="primary" type="submit">REGISTRATION</button>
+    </div>
+  </form>
+</div> 
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

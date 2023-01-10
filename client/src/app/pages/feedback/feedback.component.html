@@ -1,0 +1,22 @@
+<div *ngIf="!onShowLoader else loader">
+  <h1 class="text-center mt-20">Please write your comment about the DOLLAR NEWS :)</h1>
+  <form [formGroup]="form" (submit)="onSubmit()" class="container">
+    <nz-input-group *ngIf="!this.authService.isAuthorized;" [nzStatus]="(form.get('name')?.invalid && !form.get('name')?.untouched) ? 'error' : ''"
+      [nzSuffix]="suffixTemplateInfo" [nzPrefix]="prefixTemplateUser">
+      <input formControlName="userName" type="text" nz-input placeholder="Enter your username" />
+    </nz-input-group>
+    <ng-template #prefixTemplateUser><span nz-icon nzType="user"></span></ng-template>
+    <ng-template #suffixTemplateInfo>
+      <span nz-icon nz-tooltip nzTooltipTitle="Write your user name or login" nzType="info-circle"></span>
+    </ng-template>
+
+    <textarea class="mt-20" rows="4" nz-input formControlName="message" placeholder="Write your message..."></textarea>
+    <div class="button-wrap">
+      <button class="btn mt-20" nz-button nzType="primary" type="submit">SEND YOUR MESSAGE</button>
+    </div>
+  </form>
+</div>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

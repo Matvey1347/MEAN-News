@@ -1,0 +1,14 @@
+<div class="loader-wrap">
+  <span 
+    *ngIf="loader else spin"
+    nz-icon 
+    nzType="loading" 
+    nzTheme="outline"
+    [style.fontSize]="fontSize"
+    [style.color]="color"
+  ></span>
+
+  <ng-template #spin>
+    <nz-spin [style.fontSize]="fontSize" nzSimple></nz-spin>
+  </ng-template>
+</div>

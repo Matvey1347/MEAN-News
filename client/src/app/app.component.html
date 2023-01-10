@@ -1,0 +1,13 @@
+<div class="wrapper">
+  <notifier-container></notifier-container>
+  <app-header></app-header>
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+  <!-- <app-footer></app-footer> -->
+</div>
+
+<ng-template #customNotification let-notificationData="notification">
+  <vex-alert type="notificationData.type" [alertType]="notificationData.type" [message]="notificationData.message"
+    [id]="notificationData.id"></vex-alert>
+</ng-template>

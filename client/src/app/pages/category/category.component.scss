@@ -1,0 +1,19 @@
+.category {
+  & h2 {
+    margin-bottom: 0;
+  }
+}
+
+.news-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+
+  & .news {
+    flex: 0 1 30%;
+  }
+}
+
+.subscribed {
+  white-space: nowrap;
+}
