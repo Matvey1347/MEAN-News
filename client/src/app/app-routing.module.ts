@@ -2,14 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { RegistrationComponent } from './pages/auth/registration/registration.component';
-import { AutorComponent } from './pages/autor/autor.component';
-import { CategoryCreateComponent } from './pages/category/category-create/category-create.component';
-import { CategoryComponent } from './pages/category/category.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { FeedbackViewComponent } from './pages/feedback/feedback-view/feedback-view.component';
-import { FeedbackComponent } from './pages/feedback/feedback.component';
-import { NewsCreateComponent } from './pages/news/news-create/news-create.component';
-import { NewsComponent } from './pages/news/news.component';
 import { NotAllowedComponent } from './pages/not-allowed/not-allowed.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 
