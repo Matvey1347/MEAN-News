@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { Role } from 'src/app/shared/types/enums/role.enum';
 import { LoginPost, RegisterPost, User } from '../../shared/types/intefaces/auth.interface';
@@ -10,7 +11,10 @@ import { LoginPost, RegisterPost, User } from '../../shared/types/intefaces/auth
 export class AuthService {
   userActions = new Subject();
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) { }
 
   login(data: LoginPost): Observable<{ user: User }> {
     return this.http.post<{ user: User }>('/api/auth/login', data);
@@ -33,6 +37,7 @@ export class AuthService {
   logOut() {
     localStorage.clear();
     this.userActions.next('');
+    this.router.navigate(['/auth/registration'])
   }
 
   get user() {

@@ -15,6 +15,7 @@ export class HeaderComponent extends DestroySubscription {
   Role = Role;
   UserAndAutor = [Role.User, Role.Autor];
   Admin = [Role.Admin];
+  Autor = [Role.Autor];
 
   constructor(
     public authService: AuthService,

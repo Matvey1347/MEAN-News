@@ -5,10 +5,10 @@ export interface News {
   title: string,
   imageSrc: string,
   list: string[],
-  _id: string,
   category: Category,
   autor: Autor,
   comments: Comment[]
+  _id?: string,
 }
 
 export interface Comment {

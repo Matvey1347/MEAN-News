@@ -18,17 +18,28 @@
             routerLinkActive="active"
             [routerLinkActiveOptions]="{exact: true}"
           >Send feedback</a>
+        </li>
+        <li>
           <a 
             *ngIf="authService.isAuthorized && authService.isAllowedRole(Admin)"
             [routerLink]="['/feedback/view']"
             routerLinkActive="active"
             [routerLinkActiveOptions]="{exact: true}"
           >View feedback</a>
+        </li>
+        <li>
           <a 
             *ngIf="authService.isAuthorized && authService.isAllowedRole(Admin)" 
             [routerLink]="['/category/create']"
             routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-            >Create Category</a>
+          >Create Category</a>
+        </li>
+        <li>
+          <a 
+            *ngIf="authService.isAuthorized && authService.isAllowedRole(Autor)" 
+            [routerLink]="['/news/create']"
+            routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+          >Create News</a>
         </li>
       </ul>
       <div class="account">

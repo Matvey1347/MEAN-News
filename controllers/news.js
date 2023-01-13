@@ -14,7 +14,7 @@ module.exports.create = async function (req, res) {
         list: [...req.body.list],
         category: req.body.category,
         autor: req.body.autor,
-        coments: []
+        comments: []
       }).save();
       res.status(201).json(news);
     } else {

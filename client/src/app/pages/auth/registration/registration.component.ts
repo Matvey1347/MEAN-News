@@ -88,7 +88,6 @@ export class RegistrationComponent extends DestroySubscription {
         error => {
           this.registrationForm.enable();
           this.onShowLoader = false;
-          this.alertService.onShowAlert(error.error.message, AlertType.warning);
         }
       )
   }

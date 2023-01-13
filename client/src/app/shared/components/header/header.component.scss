@@ -12,8 +12,8 @@ ul {
   margin: 0;
 
   & li {
+    margin: 0 16px 0 0;
     & a {
-      margin: 0 16px 0 0;
       color: #fff;
       font-size: 24px;
       transition: all 0.3s ease 0s;
@@ -21,10 +21,10 @@ ul {
       &:hover {
         color: rgb(126, 147, 217);
       }
-
-      &:last-child {
-        margin: 0;
-      }
+    }
+  
+    &:last-child {
+      margin: 0;
     }
   }
 }

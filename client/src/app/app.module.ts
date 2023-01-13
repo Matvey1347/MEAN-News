@@ -8,7 +8,7 @@ import { en_US } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IconsProviderModule } from './icons-provider.module';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -19,8 +19,7 @@ import { LoginModule } from './pages/auth/login/login.module';
 import { NotifierModule, NotifierOptions } from 'angular-notifier';
 import { AlertModule } from './shared/components/alert/alert.module';
 import { RegistrationModule } from './pages/auth/registration/registration.module';
-import { NewsItemModule } from './pages/news/news-item/news-item.module';
-
+import { RequestInterceptorService } from './shared/services/RequestInterceptor/request-interceptor.service';
 
 registerLocaleData(en);
 
@@ -39,7 +38,6 @@ const customNotifierOptions: NotifierOptions = {
   theme: 'material',
   behaviour: {
     autoHide: 3000,
-    // onMouseover: 'pauseAutoHide',
     showDismissButton: true,
     stacking: 4
   },
@@ -84,7 +82,12 @@ const customNotifierOptions: NotifierOptions = {
     RegistrationModule,
   ],
   providers: [
-    { provide: NZ_I18N, useValue: en_US }
+    { provide: NZ_I18N, useValue: en_US },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RequestInterceptorService,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent]
 })

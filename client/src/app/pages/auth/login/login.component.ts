@@ -62,7 +62,6 @@ export class LoginComponent extends DestroySubscription {
         },
         error => {
           this.onShowLoader = false;
-          this.alertService.onShowAlert(error.error.message, AlertType.warning);
         }
       )
   }
