@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs';
@@ -13,7 +13,7 @@ import { User } from 'src/app/shared/types/intefaces/auth.interface';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.scss']
 })
-export class RegistrationComponent extends DestroySubscription implements OnInit {
+export class RegistrationComponent extends DestroySubscription {
   @ViewChild('input') inputRef!: ElementRef;
 
   registrationForm: FormGroup;
@@ -35,9 +35,6 @@ export class RegistrationComponent extends DestroySubscription implements OnInit
       'password': fb.control(null, Validators.required),
       'role': fb.control(null, Validators.required),
     })
-  }
-
-  ngOnInit(): void {
   }
 
   onShowPassword(input: HTMLInputElement) {
@@ -91,7 +88,6 @@ export class RegistrationComponent extends DestroySubscription implements OnInit
         error => {
           this.registrationForm.enable();
           this.onShowLoader = false;
-          console.log(error.error.message, error.message);
           this.alertService.onShowAlert(error.error.message, AlertType.warning);
         }
       )

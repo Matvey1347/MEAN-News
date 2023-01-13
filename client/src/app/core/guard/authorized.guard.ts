@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
+import { CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { Role } from 'src/app/shared/types/enums/role.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -12,11 +11,11 @@ export class AuthorizedGuard implements CanActivate {
     private router: Router
   ) { }
 
-  canActivate(router: ActivatedRouteSnapshot): boolean {
+  canActivate(_: any, state: RouterStateSnapshot): boolean {
     const isAuthorized = this.authService.isAuthorized;
-    if (!isAuthorized) {
-      this.router.navigate(['/authorized']);
+    if(isAuthorized) {
+      this.router.navigate(['/'])
     }
-    return isAuthorized
+    return !isAuthorized
   };
 }

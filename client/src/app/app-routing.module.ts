@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './pages/auth/login/login.component';
-import { RegistrationComponent } from './pages/auth/registration/registration.component';
 import { NotAllowedComponent } from './pages/not-allowed/not-allowed.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 
@@ -15,10 +13,10 @@ const routes: Routes = [
   },
   {
     path: 'auth',
-    children: [
-      { path: 'registration', component: RegistrationComponent },
-      { path: 'login', component: LoginComponent }
-    ]
+    loadChildren: () =>
+      import('./pages/auth/auth.module').then(
+        (m) => m.AuthModule
+      ),
   },
   {
     path: 'category',

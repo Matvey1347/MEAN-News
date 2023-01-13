@@ -1,1 +1,17 @@
-<p>category-create works!</p>
+<div *ngIf="!onShowLoader else loader">
+  <form [formGroup]="form" (submit)="onSubmit()" class="container mt-20">
+    <input 
+      formControlName="name" 
+      [nzStatus]="(form.get('name')?.invalid  && !form.get('name')?.untouched) ? 'error' : ''"
+      type="text" 
+      nz-input 
+      placeholder="Category name" />
+    <div class="buttons-wrap">
+      <button class="btn mt-20" nz-button nzType="primary" type="submit">CREATE CATEGORY</button>
+    </div>
+  </form>
+</div> 
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

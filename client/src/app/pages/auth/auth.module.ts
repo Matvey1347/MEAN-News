@@ -1,28 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CategoryComponent } from './category.component';
-import { CategoryRoutingModule } from './category-routing.module';
 import { LoaderModule } from 'src/app/shared/components/loader/loader.module';
 import { NewsItemModule } from '../news/news-item/news-item.module';
 import { DemoNgZorroAntdModule } from 'src/app/ng-zerro-ant.module';
-import { CategoryCreateModule } from './category-create/category-create.module';
+import { LoginModule } from './login/login.module';
+import { RegistrationModule } from './registration/registration.module';
+import { AuthRoutingModule } from './auth-routing.module';
 
 
 
 @NgModule({
-  declarations: [
-    CategoryComponent
-  ],
   imports: [
     CommonModule,
-    CategoryRoutingModule,
     LoaderModule,
     NewsItemModule,
     DemoNgZorroAntdModule,
-    CategoryCreateModule
-  ],
-  exports: [
-    CategoryComponent
+    LoginModule,
+    RegistrationModule,
+    AuthRoutingModule
   ]
 })
-export class CategoryModule { }
+export class AuthModule { }

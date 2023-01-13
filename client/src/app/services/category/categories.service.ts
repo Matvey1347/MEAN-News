@@ -21,4 +21,8 @@ export class CategoriesService {
   getById(id: string): Observable<Category> {
     return this.http.get<Category>(`/api/category/${id}`);
   }
+
+  create(name: string): Observable<{message: string}> {
+    return this.http.post<{message: string}>(`/api/category`, name);
+  }
 }

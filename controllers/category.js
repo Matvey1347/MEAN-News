@@ -11,7 +11,9 @@ module.exports.create = async function (req, res) {
 
   try {
     await category.save();
-    res.status(201).json(category)
+    res.status(201).json({
+      message: 'New category has been created :)'
+    })
   } catch (e) {
     errorHandler(res, e)
   }
