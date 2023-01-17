@@ -32,7 +32,7 @@
               *ngIf="i < 5"
               (click)="navigateToNews(news._id)"
               [news]="news"
-              [routerLink]="['news', news._id]"
+              [routerLink]="['news', news?._id]"
             ></app-news-item>
           </div>
         </div>

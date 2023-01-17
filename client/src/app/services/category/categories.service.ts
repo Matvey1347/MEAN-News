@@ -7,10 +7,11 @@ import { Category, CategoryName } from '../../shared/types/intefaces/categories.
   providedIn: 'root'
 })
 export class CategoriesService {
+  ALL_CATEGORIES_NAME = 0;
 
   constructor(private http: HttpClient) { }
 
-  getAllName(limit: number): Observable<CategoryName[]> {
+  getNames(limit: number = this.ALL_CATEGORIES_NAME): Observable<CategoryName[]> {
     return this.http.get<CategoryName[]>('/api/category/name', { params: { limit } });
   }
 

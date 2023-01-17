@@ -52,7 +52,7 @@ module.exports.getAllName = async function (req, res) {
     const categoriesName = [];
     
     categories.forEach((category) => {
-      categoriesName.push({ name: category.name, id: category._id });
+      categoriesName.push({ name: category.name, _id: category._id });
     })
 
     res.status(200).json(categoriesName)

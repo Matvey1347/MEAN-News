@@ -8,7 +8,7 @@ export interface News {
   category: Category,
   autor: Autor,
   comments: Comment[]
-  _id?: string,
+  _id: string,
 }
 
 export interface Comment {

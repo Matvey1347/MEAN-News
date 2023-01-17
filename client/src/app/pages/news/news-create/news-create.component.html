@@ -1,1 +1,62 @@
-<p>news-create works!</p>
+<div *ngIf="!onShowLoader else loader">
+  <form [formGroup]="form" (submit)="onSubmit()" class="container mt-20">
+    <input 
+      formControlName="title" 
+      type="text" 
+      nz-input 
+      placeholder="News title"
+      [nzStatus]="(form.get('title')?.invalid && !form.get('title')?.untouched) ? 'error' : ''"
+    />
+    <div class="text mb-8 mt-20">Change your category</div>
+    <nz-radio-group 
+      *ngIf="categoriesName$ | async as categoriesName; else loader" 
+      formControlName="category" 
+      nzButtonStyle="solid"
+    >
+      <label *ngFor="let categoryName of categoriesName" nz-radio-button [nzValue]="categoryName._id">{{categoryName.name}}</label>
+    </nz-radio-group>
+    <p *ngIf="isError" class="error">You must change the category for this news</p>
+    <div formArrayName="list">
+      <ng-container *ngFor="let list of listControls.controls; let i = index">
+        <div class="control-wrap mt-20">
+          <textarea [nzStatus]="(list.invalid && !list.untouched) ? 'error' : ''" [formControlName]="i" nz-input placeholder="Write your text..."></textarea>
+          <button 
+            (click)="deleteList(i)"
+            *ngIf="i"
+          >
+            <span nz-icon nzType="close-circle" nzTheme="outline"></span>
+          </button>
+        </div>
+      </ng-container>
+      <button 
+        class="btn mt-20" 
+        (click)="addList()"
+        nz-button nzType="primary" 
+        type="button"
+      >Add more text</button>
+    </div>
+    <div class="buttons-wrap mt-20">
+      <input type="file" style="display: none;" (change)="uploadFile($event)" #input>
+      <div class="upload-wrap flex items-center">
+        <button (click)="triggerClick()" class="mr-16" nz-button [disabled]="form.disabled" type="button">
+          <span nz-icon nzType="video-camera" nzTheme="outline"></span>
+          Загрузить изображение
+        </button>
+
+        <div class="image">
+          <nz-avatar 
+            *ngIf="!imagePreview" 
+            [nzSize]="100" 
+            nzIcon="video-camera"
+          ></nz-avatar>
+          <img *ngIf="imagePreview" [src]="imagePreview" [alt]="imagePreview">
+        </div>
+      </div>
+      <button class="btn mt-20" nz-button nzType="primary" type="submit">REGISTRATION</button>
+    </div>
+  </form>
+</div> 
+
+<ng-template #loader>
+  <app-loader class="mt-20"></app-loader>
+</ng-template>
