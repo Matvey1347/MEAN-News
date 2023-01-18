@@ -5,6 +5,7 @@ import { NewsRoutingModule } from './news-routing.module';
 import { DemoNgZorroAntdModule } from 'src/app/ng-zerro-ant.module';
 import { LoaderModule } from 'src/app/shared/components/loader/loader.module';
 import { NewsCreateModule } from './news-create/news-create.module';
+import { AllNewsWithFilterModule } from './all-news-with-filter/all-news-with-filter.module';
 
 
 
@@ -17,7 +18,8 @@ import { NewsCreateModule } from './news-create/news-create.module';
     NewsRoutingModule,
     DemoNgZorroAntdModule,
     LoaderModule,
-    NewsCreateModule
+    NewsCreateModule,
+    AllNewsWithFilterModule
   ]
 })
 export class NewsModule { }

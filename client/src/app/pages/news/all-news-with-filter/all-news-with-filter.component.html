@@ -1,0 +1,20 @@
+<div *ngIf="!isShowLoader else loader" class="container mt-20">
+  <div class="text mb-8 mt-20">Change category</div>
+  <nz-radio-group 
+    *ngIf="categoriesName$ | async as categoriesName; else loader" 
+    formControlName="category"
+    nzButtonStyle="solid"
+  >
+    <label 
+      *ngFor="let categoryName of categoriesName" nz-radio-button
+      [nzValue]="categoryName._id"
+    >
+      {{categoryName.name}}
+    </label>
+  </nz-radio-group>
+  <input class="mt-20" nz-input type="text" placeholder="Search by title of the news">
+</div>
+
+<ng-template #loader>
+  <app-loader class="mt-20"></app-loader>
+</ng-template>

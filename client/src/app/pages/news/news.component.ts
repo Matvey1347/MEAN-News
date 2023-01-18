@@ -19,8 +19,8 @@ import { News } from 'src/app/shared/types/intefaces/news.interface';
 export class NewsComponent extends DestroySubscription implements OnInit {
   news!: News;
   newsId!: string;
-  onShowLoaderBigLoader = false;
-  onShowLoaderForComments = false;
+  isShowLoaderBigLoader = false;
+  isShowLoaderForComments = false;
   user!: User;
 
   constructor(
@@ -38,7 +38,7 @@ export class NewsComponent extends DestroySubscription implements OnInit {
       .pipe(takeUntil(this.destroyStream$))
       .subscribe(
         (params) => {
-          this.onShowLoaderBigLoader = true;
+          this.isShowLoaderBigLoader = true;
           this.newsId = params['id'];
           this.newsService
             .getById(params['id'])
@@ -46,7 +46,7 @@ export class NewsComponent extends DestroySubscription implements OnInit {
             .subscribe(
               (news) => {
                 this.news = news;
-                this.onShowLoaderBigLoader = false;
+                this.isShowLoaderBigLoader = false;
               }
             )
         }
@@ -65,7 +65,7 @@ export class NewsComponent extends DestroySubscription implements OnInit {
   addComment(inputComment: HTMLInputElement, event?: any) {
     if (!event || event.key === "Enter") {
       if (inputComment.value) {
-        this.onShowLoaderForComments = true;
+        this.isShowLoaderForComments = true;
         const comment = {
           message: inputComment.value,
           autor: this.authService.user._id
@@ -76,12 +76,12 @@ export class NewsComponent extends DestroySubscription implements OnInit {
           .subscribe(
             (news) => {
               inputComment.value = '';
-              this.onShowLoaderForComments = false;
+              this.isShowLoaderForComments = false;
               this.news.comments.push(news.comments[news.comments.length - 1]);
               this.alertService.onShowAlert('Your message has been successfully added :)', AlertType.success);
             },
             error => {
-              this.onShowLoaderForComments = false;
+              this.isShowLoaderForComments = false;
             }
           )
       } else {

@@ -1,4 +1,4 @@
-<div *ngIf="!onShowLoader else loader">
+<div *ngIf="!isShowLoader else loader">
   <form [formGroup]="form" (submit)="onSubmit()" class="container mt-20">
     <input 
       formControlName="title" 

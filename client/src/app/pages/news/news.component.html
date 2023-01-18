@@ -1,4 +1,4 @@
-<div *ngIf="!onShowLoaderBigLoader; else loader" class="container news mt-40">
+<div *ngIf="!isShowLoaderBigLoader; else loader" class="container news mt-40">
   <div class="flex justify-between">
     <div class="flex flex-col items-center">
       <h3>
@@ -53,7 +53,7 @@
       </ng-template>
     </div>
     <div class="mt-20">
-      <div *ngIf="!onShowLoaderForComments; else loader">
+      <div *ngIf="!isShowLoaderForComments; else loader">
         <div *ngIf="news.comments.length else noComments" class="news__comments_items comments__items">
           <div *ngFor="let comment of news.comments" class="comments__items_item flex items-center mt-20">
             <div class="flex flex-col items-center mr-16">

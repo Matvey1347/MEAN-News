@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Observable, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CategoriesService } from 'src/app/services/category/categories.service';
@@ -9,7 +8,6 @@ import { DestroySubscription } from 'src/app/shared/helpers/destroy-subscription
 import { AlertService } from 'src/app/shared/services/alert/alert.service';
 import { AlertType } from 'src/app/shared/types/enums/alert.enum';
 import { CategoryName } from 'src/app/shared/types/intefaces/categories.intarface';
-import { NewsCreatePost } from 'src/app/shared/types/intefaces/news.interface';
 
 @Component({
   selector: 'app-news-create',
@@ -21,8 +19,8 @@ export class NewsCreateComponent extends DestroySubscription implements OnInit {
   @ViewChild('input') inputRef!: ElementRef;
 
   form: FormGroup;
-  categoriesName$!: Observable<CategoryName[]>
-  onShowLoader = false;
+  categoriesName$!: Observable<CategoryName[]>;
+  isShowLoader = false;
   image!: File;
   imagePreview: any = '';
   showPassword = false;
@@ -30,7 +28,6 @@ export class NewsCreateComponent extends DestroySubscription implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router,
     private alertService: AlertService,
     private authService: AuthService,
     private categoriesService: CategoriesService,
@@ -98,7 +95,7 @@ export class NewsCreateComponent extends DestroySubscription implements OnInit {
   }
 
   onSubmit() {
-    this.onShowLoader = true;
+    this.isShowLoader = true;
     const list = this.form.get('list') as FormArray;
     const listControls = list.controls;
     const controls = this.form.controls;
@@ -109,7 +106,7 @@ export class NewsCreateComponent extends DestroySubscription implements OnInit {
       Object.keys(listControls).forEach((listControlName, i) => {
         listControls[i].markAsTouched();
       });
-      this.onShowLoader = false;
+      this.isShowLoader = false;
       this.isError = !!this.form.get('category')?.invalid;
       return;
     }
@@ -125,7 +122,7 @@ export class NewsCreateComponent extends DestroySubscription implements OnInit {
       obs$.pipe(takeUntil(this.destroyStream$))
       .subscribe(
         (data) => {
-          this.onShowLoader = false;
+          this.isShowLoader = false;
           this.alertService.onShowAlert('News was successfully created :)', AlertType.success);
           this.form.reset();
           this.imagePreview = '';
@@ -133,7 +130,7 @@ export class NewsCreateComponent extends DestroySubscription implements OnInit {
         },
         error => {
           console.log(error);
-          this.onShowLoader = false;
+          this.isShowLoader = false;
         }
       )
   }
