@@ -1,20 +1,48 @@
-<div *ngIf="!isShowLoader else loader" class="container mt-20">
-  <div class="text mb-8 mt-20">Change category</div>
-  <nz-radio-group 
-    *ngIf="categoriesName$ | async as categoriesName; else loader" 
-    formControlName="category"
-    nzButtonStyle="solid"
+<form [formGroup]="form" class="container mt-20">
+  <div class="flex">
+    <div class="flex-80">
+      <div class="text mb-8 mt-20">Change category</div>
+      <nz-radio-group 
+        *ngIf="categoriesName$ | async as categoriesName; else loader" 
+        formControlName="category"
+        nzButtonStyle="solid"
+      >
+        <label 
+          *ngFor="let categoryName of categoriesName" nz-radio-button
+          [nzValue]="categoryName._id"
+        >
+          {{categoryName.name}}
+        </label>
+      </nz-radio-group>
+    </div>
+    <div class="flex-20 btn-wrap">
+      <button (click)="showAll()" nz-button>SHOW ALL</button>
+    </div>
+  </div>
+  <input 
+    formControlName="title"
+    class="mt-20" nz-input 
+    type="text" 
+    placeholder="Search by title of the news"
   >
-    <label 
-      *ngFor="let categoryName of categoriesName" nz-radio-button
-      [nzValue]="categoryName._id"
-    >
-      {{categoryName.name}}
-    </label>
-  </nz-radio-group>
-  <input class="mt-20" nz-input type="text" placeholder="Search by title of the news">
-</div>
+
+  <div *ngIf="!isShowLoader else loader">
+    <div *ngIf="news.length else noNews" class="news-wrap mt-20 mb-20">
+      <div *ngFor="let oneNews of news; let i = index" class="news">
+        <app-news-item
+          (click)="navigateToNews(oneNews._id)" 
+          [news]="oneNews"
+          [routerLink]="['news', oneNews?._id]"
+        ></app-news-item>
+      </div>
+    </div>
+  </div>
+</form>
 
 <ng-template #loader>
   <app-loader class="mt-20"></app-loader>
+</ng-template>
+
+<ng-template #noNews>
+  <h3 class="text-center flex-center mt-20">Can't find news with such parameters :(</h3>
 </ng-template>

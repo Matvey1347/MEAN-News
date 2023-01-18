@@ -5,6 +5,8 @@ import { LoaderModule } from 'src/app/shared/components/loader/loader.module';
 import { DemoNgZorroAntdModule } from 'src/app/ng-zerro-ant.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertModule } from 'src/app/shared/components/alert/alert.module';
+import { NewsItemModule } from '../news-item/news-item.module';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -19,6 +21,8 @@ import { AlertModule } from 'src/app/shared/components/alert/alert.module';
     ReactiveFormsModule,
     FormsModule,
     AlertModule,
+    NewsItemModule,
+    RouterModule
   ],
   exports: [
     AllNewsWithFilterComponent
