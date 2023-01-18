@@ -17,7 +17,7 @@ export class RegistrationComponent extends DestroySubscription {
   @ViewChild('input') inputRef!: ElementRef;
 
   registrationForm: FormGroup;
-  onShowLoader = false;
+  isShowLoader = false;
   image!: File;
   imagePreview: any = '';
   showPassword = false;
@@ -70,11 +70,11 @@ export class RegistrationComponent extends DestroySubscription {
   }
 
   onSubmit() {
-    this.onShowLoader = true;
+    this.isShowLoader = true;
     const controls = this.registrationForm.controls;
     if (this.registrationForm.invalid) {
       Object.keys(controls).forEach((controlName) => controls[controlName].markAsTouched());
-      this.onShowLoader = false;
+      this.isShowLoader = false;
       return;
     }
     this.registrationForm.disable();
@@ -91,7 +91,7 @@ export class RegistrationComponent extends DestroySubscription {
       .subscribe(
         (data: { user: User }) => {
           this.registrationForm.enable();
-          this.onShowLoader = false;
+          this.isShowLoader = false;
           localStorage.setItem('user', JSON.stringify(data.user));
           this.authService.userActions.next('');
           this.router.navigate(['/']);
@@ -99,7 +99,7 @@ export class RegistrationComponent extends DestroySubscription {
         },
         error => {
           this.registrationForm.enable();
-          this.onShowLoader = false;
+          this.isShowLoader = false;
         }
       )
   }

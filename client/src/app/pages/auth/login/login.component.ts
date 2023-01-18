@@ -15,7 +15,7 @@ import { User } from 'src/app/shared/types/intefaces/auth.interface';
 })
 export class LoginComponent extends DestroySubscription {
   loginForm: FormGroup;
-  onShowLoader = false;
+  isShowLoader = false;
   showPassword = false;
 
   constructor(
@@ -42,11 +42,11 @@ export class LoginComponent extends DestroySubscription {
   }
 
   onSubmit() {
-    this.onShowLoader = true;
+    this.isShowLoader = true;
     const controls = this.loginForm.controls;
     if (this.loginForm.invalid) {
       Object.keys(controls).forEach((controlName) => controls[controlName].markAsTouched());
-      this.onShowLoader = false;
+      this.isShowLoader = false;
       return;
     }
     this.authService
@@ -54,14 +54,14 @@ export class LoginComponent extends DestroySubscription {
       .pipe(takeUntil(this.destroyStream$))
       .subscribe(
         (data: { user: User }) => {
-          this.onShowLoader = false;
+          this.isShowLoader = false;
           localStorage.setItem('user', JSON.stringify(data.user));
           this.authService.userActions.next('');
           this.router.navigate(['/']);
           this.alertService.onShowAlert('Login successfully :)', AlertType.success);
         },
         error => {
-          this.onShowLoader = false;
+          this.isShowLoader = false;
         }
       )
   }

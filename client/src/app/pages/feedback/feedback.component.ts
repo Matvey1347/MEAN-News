@@ -17,7 +17,7 @@ import { Feedback } from 'src/app/shared/types/intefaces/feedback.interface';
 })
 export class FeedbackComponent extends DestroySubscription implements OnInit {
   form: FormGroup;
-  onShowLoader = false;
+  isShowLoader = false;
   user!: User;
 
   constructor(
@@ -38,11 +38,11 @@ export class FeedbackComponent extends DestroySubscription implements OnInit {
   }
 
   onSubmit() {
-    this.onShowLoader = true;
+    this.isShowLoader = true;
     const controls = this.form.controls;
     if (this.form.invalid) {
       Object.keys(controls).forEach((controlName) => controls[controlName].markAsTouched());
-      this.onShowLoader = false;
+      this.isShowLoader = false;
       return;
     }
 
@@ -57,12 +57,12 @@ export class FeedbackComponent extends DestroySubscription implements OnInit {
       .pipe(takeUntil(this.destroyStream$))
       .subscribe(
         (data: { message: string }) => {
-          this.onShowLoader = false;
+          this.isShowLoader = false;
           this.alertService.onShowAlert(data.message, AlertType.success);
           this.form.reset();
         },
         error => {
-          this.onShowLoader = false;
+          this.isShowLoader = false;
           this.alertService.onShowAlert(error.error.message, AlertType.warning);
         }
       )

@@ -1,4 +1,4 @@
-<div *ngIf="!onShowLoader else loader">
+<div *ngIf="!isShowLoader else loader">
   <h1 class="text-center mt-20">Please write your comment about the DOLLAR NEWS :)</h1>
   <form [formGroup]="form" (submit)="onSubmit()" class="container">
     <nz-input-group *ngIf="!this.authService.isAuthorized;" [nzStatus]="(form.get('name')?.invalid && !form.get('name')?.untouched) ? 'error' : ''"

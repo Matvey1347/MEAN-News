@@ -18,7 +18,7 @@ export class CategoryCreateComponent extends DestroySubscription {
   @ViewChild('input') inputRef!: ElementRef;
 
   form: FormGroup;
-  onShowLoader = false;
+  isShowLoader = false;
   image!: File;
   imagePreview: any = '';
   showPassword = false;
@@ -36,11 +36,11 @@ export class CategoryCreateComponent extends DestroySubscription {
   }
 
   onSubmit() {
-    this.onShowLoader = true;
+    this.isShowLoader = true;
     const controls = this.form.controls;
     if (this.form.invalid) {
       Object.keys(controls).forEach((controlName) => controls[controlName].markAsTouched());
-      this.onShowLoader = false;
+      this.isShowLoader = false;
       return;
     }
     this.form.disable();
@@ -51,12 +51,12 @@ export class CategoryCreateComponent extends DestroySubscription {
         (data: { message: string }) => {
           this.form.enable();
           this.form.reset();
-          this.onShowLoader = false;
+          this.isShowLoader = false;
           this.alertService.onShowAlert(data.message, AlertType.success);
         },
         error => {
           this.form.enable();
-          this.onShowLoader = false;
+          this.isShowLoader = false;
         }
       )
   }

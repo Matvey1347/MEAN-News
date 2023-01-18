@@ -11,35 +11,37 @@
         <span class="logo__name">DOLLAR NEWS</span>
       </a>
       <ul class="ml-16">
-        <li>
-          <a 
-            *ngIf="authService.isAllowedRole(UserAndAutor)"
+        <li *ngIf="authService.isAllowedRole(UserAndAutor)">
+          <a
             [routerLink]="['/feedback']"
             routerLinkActive="active"
             [routerLinkActiveOptions]="{exact: true}"
           >Send feedback</a>
         </li>
-        <li>
-          <a 
-            *ngIf="authService.isAuthorized && authService.isAllowedRole(Admin)"
+        <li *ngIf="authService.isAuthorized && authService.isAllowedRole(Admin)">
+          <a
             [routerLink]="['/feedback/view']"
             routerLinkActive="active"
             [routerLinkActiveOptions]="{exact: true}"
           >View feedback</a>
         </li>
-        <li>
+        <li *ngIf="authService.isAuthorized && authService.isAllowedRole(Admin)" >
           <a 
-            *ngIf="authService.isAuthorized && authService.isAllowedRole(Admin)" 
             [routerLink]="['/category/create']"
             routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
           >Create Category</a>
         </li>
-        <li>
-          <a 
-            *ngIf="authService.isAuthorized && authService.isAllowedRole(Autor)" 
+        <li *ngIf="authService.isAuthorized && authService.isAllowedRole(Autor)">
+          <a  
             [routerLink]="['/news/create']"
             routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
           >Create News</a>
+        </li>
+        <li>
+          <a 
+            [routerLink]="['/news']"
+            routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+            >All News</a>
         </li>
       </ul>
       <div class="account">

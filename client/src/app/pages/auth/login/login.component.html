@@ -1,4 +1,4 @@
-<div *ngIf="!onShowLoader else loader">
+<div *ngIf="!isShowLoader else loader">
   <form [formGroup]="loginForm" (submit)="onSubmit()" class="container">
     <nz-input-group 
       [nzStatus]="(loginForm.get('name')?.invalid && !loginForm.get('name')?.untouched) ? 'error' : ''" 
