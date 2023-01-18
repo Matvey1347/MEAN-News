@@ -7,8 +7,15 @@ export interface News {
   list: string[],
   category: Category,
   autor: Autor,
-  comments: Comment[]
+  comments: Comment[],
   _id: string,
+}
+
+export interface NewsCreatePost {
+  title: string,
+  list: string[],
+  category: string,
+  autor: string,
 }
 
 export interface Comment {

@@ -32,13 +32,31 @@
         <nz-option nzValue="autor" nzLabel="autor"></nz-option>
         <nz-option nzValue="admin" nzLabel="admin"></nz-option>
       </nz-select>
-    <div class="buttons-wrap">
+    <div class="buttons-wrap mt-20">
+      <nz-radio-group formControlName="how-pass-image">
+        <label nz-radio nzValue="link">Link</label>
+        <label nz-radio nzValue="download">Download from your device</label>
+      </nz-radio-group>
       <input type="file" style="display: none;" (change)="uploadFile($event)" #input>
       <div class="upload-wrap">
-        <button (click)="triggerClick()" nz-button [disabled]="registrationForm.disabled" type="button">
+        <button 
+          (click)="triggerClick()" 
+          *ngIf="registrationForm.get('how-pass-image')?.value === 'download'"
+          class="mr-16 btn-upload"
+          nz-button [disabled]="registrationForm.disabled" type="button"
+          >
           <span nz-icon nzType="video-camera" nzTheme="outline"></span>
           Загрузить изображение
         </button>
+
+        <div *ngIf="registrationForm.get('how-pass-image')?.value === 'link'" class="mr-16">
+          <nz-input-group [nzSuffix]="suffixIconSearch" class="minw-200">
+            <input (input)="addImageLink($event)" type="text" nz-input placeholder="Insert your link" />
+          </nz-input-group>
+          <ng-template #suffixIconSearch>
+            <span nz-icon nzType="link" nzTheme="outline"></span>
+          </ng-template>
+        </div>
 
         <div class="image">
           <nz-avatar 

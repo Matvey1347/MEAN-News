@@ -28,3 +28,20 @@
     max-height: 100px;
   }
 }
+
+.btn-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.btn-upload {
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.minw-200 {
+  min-width: 200px;
+}

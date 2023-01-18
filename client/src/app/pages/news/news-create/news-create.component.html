@@ -15,7 +15,7 @@
     >
       <label *ngFor="let categoryName of categoriesName" nz-radio-button [nzValue]="categoryName._id">{{categoryName.name}}</label>
     </nz-radio-group>
-    <p *ngIf="isError" class="error">You must change the category for this news</p>
+    <p *ngIf="isError && !form.get('category')?.value" class="error">You must change the category for this news</p>
     <div formArrayName="list">
       <ng-container *ngFor="let list of listControls.controls; let i = index">
         <div class="control-wrap mt-20">
@@ -36,12 +36,31 @@
       >Add more text</button>
     </div>
     <div class="buttons-wrap mt-20">
+      <nz-radio-group formControlName="how-pass-image">
+        <label nz-radio nzValue="link">Link</label>
+        <label nz-radio nzValue="download">Download from your device</label>
+      </nz-radio-group>
       <input type="file" style="display: none;" (change)="uploadFile($event)" #input>
       <div class="upload-wrap flex items-center">
-        <button (click)="triggerClick()" class="mr-16" nz-button [disabled]="form.disabled" type="button">
+        <button 
+          (click)="triggerClick()" 
+          *ngIf="form.get('how-pass-image')?.value === 'download'"
+          class="mr-16 btn-upload" nz-button 
+          [disabled]="form.disabled" 
+          type="button"
+        >
           <span nz-icon nzType="video-camera" nzTheme="outline"></span>
           Загрузить изображение
         </button>
+
+        <div *ngIf="form.get('how-pass-image')?.value === 'link'" class="mr-16">
+          <nz-input-group [nzSuffix]="suffixIconSearch" class="minw-200">
+            <input (input)="addImageLink($event)" type="text" nz-input placeholder="Insert your link" />
+          </nz-input-group>
+          <ng-template #suffixIconSearch>
+            <span nz-icon nzType="link" nzTheme="outline"></span>
+          </ng-template>
+        </div>
 
         <div class="image">
           <nz-avatar 
@@ -52,7 +71,7 @@
           <img *ngIf="imagePreview" [src]="imagePreview" [alt]="imagePreview">
         </div>
       </div>
-      <button class="btn mt-20 mb-20" nz-button nzType="primary" type="submit">REGISTRATION</button>
+      <div class="btn-wrap"><button class="btn mt-20 m-auto mb-20" nz-button nzType="primary" type="submit">CREATE</button></div>
     </div>
   </form>
 </div> 

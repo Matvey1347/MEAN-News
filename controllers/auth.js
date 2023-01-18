@@ -42,17 +42,12 @@ module.exports.registration = async function (req, res) {
     const saltjs = bcryptjs.genSaltSync(10)
     const password = req.body.password;
     const hash = bcryptjs.hashSync(password, saltjs);
-    const data = (req.file) ? {
+    const data = {
       email: req.body.email,
       password: hash,
       name: req.body.name,
       role: req.body.role,
-      imageSrc: req.file.path
-    } : {
-      email: req.body.email,
-      password: hash,
-      name: req.body.name,
-      role: req.body.role,
+      imageSrc: (req.file) ? req.file.path : (req.body.url) ? req.body.url : ''
     };
 
     const user = new User(data);

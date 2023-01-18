@@ -21,17 +21,18 @@ export class AuthService {
   }
 
   register(data: RegisterPost, image?: File): Observable<{ user: User }> {
-    const fd = new FormData();
-    fd.append('name', data.name);
-    fd.append('email', data.email);
-    fd.append('password', data.password);
-    fd.append('role', data.role);
-
     if (image) {
+      const fd = new FormData();
+      fd.append('name', data.name);
+      fd.append('email', data.email);
+      fd.append('password', data.password);
+      fd.append('role', data.role);
       fd.append('image', image, image.name);
+  
+      return this.http.post<{ user: User }>(`/api/auth/registration`, fd);
+    } else {
+      return this.http.post<{ user: User }>(`/api/auth/registration`, {...data});
     }
-
-    return this.http.post<{ user: User }>(`/api/auth/registration`, fd);
   }
 
   logOut() {

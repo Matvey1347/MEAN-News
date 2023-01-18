@@ -2,10 +2,14 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, takeUntil } from 'rxjs';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { CategoriesService } from 'src/app/services/category/categories.service';
+import { NewsService } from 'src/app/services/news/news.service';
 import { DestroySubscription } from 'src/app/shared/helpers/destroy-subscription';
 import { AlertService } from 'src/app/shared/services/alert/alert.service';
+import { AlertType } from 'src/app/shared/types/enums/alert.enum';
 import { CategoryName } from 'src/app/shared/types/intefaces/categories.intarface';
+import { NewsCreatePost } from 'src/app/shared/types/intefaces/news.interface';
 
 @Component({
   selector: 'app-news-create',
@@ -28,14 +32,16 @@ export class NewsCreateComponent extends DestroySubscription implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private alertService: AlertService,
-    private categoriesService: CategoriesService
+    private authService: AuthService,
+    private categoriesService: CategoriesService,
+    private newsService: NewsService
   ) {
     super();
     this.form = this.fb.group({
       'title': fb.control(null, Validators.required),
       'category': fb.control(null, Validators.required),
       'list': fb.array([this.addListControls()], Validators.required),
-      'role': fb.control(null, Validators.required),
+      'how-pass-image': fb.control('download')
     })
   }
 
@@ -87,6 +93,10 @@ export class NewsCreateComponent extends DestroySubscription implements OnInit {
     reader.readAsDataURL(file);
   }
 
+  addImageLink(event: any) { 
+    this.imagePreview = event.target.value;
+  }
+
   onSubmit() {
     this.onShowLoader = true;
     const list = this.form.get('list') as FormArray;
@@ -103,23 +113,28 @@ export class NewsCreateComponent extends DestroySubscription implements OnInit {
       this.isError = !!this.form.get('category')?.invalid;
       return;
     }
-    this.form.disable();
-    // this.authService
-    //   .register(this.form.value, this.image)
-    //   .pipe(takeUntil(this.destroyStream$))
-    //   .subscribe(
-    //     (data: { user: User }) => {
-    //       this.form.enable();
-    //       this.onShowLoader = false;
-    //       localStorage.setItem('user', JSON.stringify(data.user));
-    //       this.authService.userActions.next('');
-    //       this.router.navigate(['/']);
-    //       this.alertService.onShowAlert('Registration successfully :)', AlertType.success);
-    //     },
-    //     error => {
-    //       this.form.enable();
-    //       this.onShowLoader = false;
-    //     }
-    //   )
+
+    let obs$;
+    if (this.form.get('how-pass-image')?.value === 'download' && this.imagePreview) {
+      obs$ = this.newsService
+        .create({ ...this.form.value, autor: this.authService.user._id }, this.image);
+    } else {
+      obs$ = this.newsService
+        .create({ ...this.form.value, url: this.imagePreview, autor: this.authService.user._id })
+    }
+      obs$.pipe(takeUntil(this.destroyStream$))
+      .subscribe(
+        (data) => {
+          this.onShowLoader = false;
+          this.alertService.onShowAlert('News was successfully created :)', AlertType.success);
+          this.form.reset();
+          this.imagePreview = '';
+          this.isError = false;
+        },
+        error => {
+          console.log(error);
+          this.onShowLoader = false;
+        }
+      )
   }
 }

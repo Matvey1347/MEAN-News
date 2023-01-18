@@ -5,24 +5,15 @@
   justify-content: center;
   width: 100%;
 
-  & input {
+  & input[type="file"] {
     display: none;
-  }
-
-  & button {
-    margin-top: 10px;
   }
 }
 
 .upload-wrap {
-  margin-top: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  & button {
-    margin-right: 30px;
-  }
 
   & .image {
     & img {
@@ -36,4 +27,15 @@
 
 nz-select {
   width: 100%;
+}
+
+.btn-upload {
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.minw-200 {
+  min-width: 200px;
 }

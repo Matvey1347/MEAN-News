@@ -34,6 +34,7 @@ export class RegistrationComponent extends DestroySubscription {
       'email': fb.control(null, [Validators.required, Validators.email]),
       'password': fb.control(null, Validators.required),
       'role': fb.control(null, Validators.required),
+      'how-pass-image': fb.control('download')
     })
   }
 
@@ -64,6 +65,10 @@ export class RegistrationComponent extends DestroySubscription {
     reader.readAsDataURL(file);
   }
 
+  addImageLink(event: any) {
+    this.imagePreview = event.target.value;
+  }
+
   onSubmit() {
     this.onShowLoader = true;
     const controls = this.registrationForm.controls;
@@ -73,9 +78,16 @@ export class RegistrationComponent extends DestroySubscription {
       return;
     }
     this.registrationForm.disable();
-    this.authService
-      .register(this.registrationForm.value, this.image)
-      .pipe(takeUntil(this.destroyStream$))
+
+    let obs$;
+    if (this.registrationForm.get('how-pass-image')?.value === 'download' && this.imagePreview) {
+      obs$ = this.authService
+        .register({ ...this.registrationForm.value }, this.image);
+    } else {
+      obs$ = this.authService
+        .register({ ...this.registrationForm.value, url: this.imagePreview })
+    }
+    obs$.pipe(takeUntil(this.destroyStream$))
       .subscribe(
         (data: { user: User }) => {
           this.registrationForm.enable();

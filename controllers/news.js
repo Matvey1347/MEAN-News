@@ -11,7 +11,7 @@ module.exports.create = async function (req, res) {
       const news = await new News({
         title: req.body.title,
         imageSrc: req.file ? req.file.path : (req.body.url) ? req.body.url : '',
-        list: [...req.body.list],
+        list: (req.body.list.typeof === 'string') ? JSON.parse(req.body.list) : req.body.list,
         category: req.body.category,
         autor: req.body.autor,
         comments: []
