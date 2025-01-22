@@ -13,7 +13,11 @@
       formControlName="category" 
       nzButtonStyle="solid"
     >
-      <label *ngFor="let categoryName of categoriesName" nz-radio-button [nzValue]="categoryName._id">{{categoryName.name}}</label>
+      <label 
+        *ngFor="let categoryName of categoriesName" 
+        nz-radio-button 
+        [nzValue]="categoryName._id"
+      >{{categoryName.name}}</label>
     </nz-radio-group>
     <p *ngIf="isError && !form.get('category')?.value" class="error">You must change the category for this news</p>
     <div formArrayName="list">

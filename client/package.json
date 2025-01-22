@@ -26,11 +26,12 @@
     "dagre": "^0.8.5",
     "dagre-compound": "^0.0.13",
     "monaco-editor": "^0.34.1",
-    "ng-zorro-antd": "^14.3.0",
+    "ng-zorro-antd": "^14.0.0",
     "ng-zorro-antd-mobile": "^7.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.11.4"
+    "zone.js": "~0.11.4",
+    "@babel/runtime": "^7.18.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^14.2.9",
@@ -51,7 +52,10 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
-    "nodemon": "^2.0.20",
-    "typescript": "~4.7.2"
+    "nodemon": "^3.1.9",
+    "typescript": "~4.6.4",
+    "@types/node": "^14.18.0",
+    "@babel/core": "^7.18.0",
+    "@babel/preset-env": "^7.18.0"
   }
 }

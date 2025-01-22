@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CategoriesService } from 'src/app/services/category/categories.service';
@@ -25,13 +26,15 @@ export class NewsCreateComponent extends DestroySubscription implements OnInit {
   imagePreview: any = '';
   showPassword = false;
   isError = false;
+  firstCategoryId: string = "";
 
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
     private authService: AuthService,
     private categoriesService: CategoriesService,
-    private newsService: NewsService
+    private newsService: NewsService,
+    private router: Router
   ) {
     super();
     this.form = this.fb.group({
@@ -39,16 +42,23 @@ export class NewsCreateComponent extends DestroySubscription implements OnInit {
       'category': fb.control(null, Validators.required),
       'list': fb.array([this.addListControls()], Validators.required),
       'how-pass-image': fb.control('download')
-    })
+    });
   }
 
   ngOnInit(): void {
     this.categoriesName$ = this.categoriesService.getNames();
+
+    this.categoriesName$.subscribe(categories => {
+      if (categories && categories.length > 0) {
+        this.firstCategoryId = categories[0]._id;
+        this.form.get('category')?.setValue(this.firstCategoryId);
+      }
+    });
   }
 
   private addListControls() {
     const fb = this.fb;
-    return  fb.control('', Validators.required);
+    return fb.control('', Validators.required);
   }
 
   get listControls() {
@@ -90,7 +100,7 @@ export class NewsCreateComponent extends DestroySubscription implements OnInit {
     reader.readAsDataURL(file);
   }
 
-  addImageLink(event: any) { 
+  addImageLink(event: any) {
     this.imagePreview = event.target.value;
   }
 
@@ -119,17 +129,20 @@ export class NewsCreateComponent extends DestroySubscription implements OnInit {
       obs$ = this.newsService
         .create({ ...this.form.value, url: this.imagePreview, autor: this.authService.user._id })
     }
-      obs$.pipe(takeUntil(this.destroyStream$))
+    obs$.pipe(takeUntil(this.destroyStream$))
       .subscribe(
         (data) => {
           this.isShowLoader = false;
           this.alertService.onShowAlert('News was successfully created :)', AlertType.success);
           this.form.reset();
+          this.form.get('category')?.setValue(this.firstCategoryId);
+          this.form.get('how-pass-image')?.setValue('download');
           this.imagePreview = '';
           this.isError = false;
+          this.router.navigate(['/news']);
         },
         error => {
-          console.log(error);
+          console.log("error", error);
           this.isShowLoader = false;
         }
       )
